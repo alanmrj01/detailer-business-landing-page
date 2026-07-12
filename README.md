@@ -1,12 +1,92 @@
-# Detailer Business — Landing Page comercial 1.1
+# Detailer Business — Landing Page comercial 2.1
 
 Landing page em React + Vite + TypeScript criada para apresentar o Detailer Business a criadores de conteúdo da estética automotiva.
 
-A demonstração completa do jogo está incorporada no projeto em `public/game` e aparece dentro de um `iframe` na seção **Experiência ao vivo**.
+## Arquitetura desta versão
+
+O app e a landing são projetos independentes:
+
+- **Landing page:** este repositório.
+- **App/jogo:** projeto próprio publicado em outro endereço do Netlify.
+
+A landing carrega a URL pública do app em um `iframe`. Portanto, depois que a integração é configurada uma vez, qualquer atualização publicada no projeto do app aparece automaticamente na demonstração, sem recompilar ou republicar a landing.
+
+O build local do jogo deixou de existir em `public/game`.
+
+## Configurar a URL do app no Netlify
+
+Depois de publicar o app e obter um endereço como:
+
+```text
+https://nome-do-app.netlify.app
+```
+
+No projeto da **landing page** no Netlify:
+
+1. Abra **Project configuration**.
+2. Entre em **Environment variables**.
+3. Crie a variável:
+
+```text
+VITE_GAME_URL=https://nome-do-app.netlify.app
+```
+
+4. Não coloque barra no final da URL.
+5. Faça um novo deploy da landing usando **Deploys → Trigger deploy**.
+
+O código adiciona automaticamente `?embed=1&source=landing` ao iframe. O parâmetro não quebra versões antigas do app e poderá ativar o modo incorporado quando ele for implementado no jogo.
+
+### Configuração alternativa por arquivo
+
+Também é possível preencher a URL em:
+
+```text
+public/app-config.js
+```
+
+Exemplo:
+
+```js
+window.DETAILER_CONFIG = {
+  gameUrl: 'https://nome-do-app.netlify.app',
+};
+```
+
+A variável `VITE_GAME_URL` tem prioridade sobre esse arquivo.
+
+## Comportamento da demonstração
+
+- No desktop, o app aparece diretamente dentro da seção **Experiência ao vivo**.
+- No celular, a landing mostra uma prévia e abre o app em um iframe que ocupa toda a tela.
+- Ao fechar a demonstração no celular, o visitante volta ao mesmo ponto da landing.
+- O botão **Abrir em nova guia** leva para o projeto independente do app.
+- Se a URL ainda não estiver configurada, a landing apresenta uma orientação de configuração em vez de carregar um iframe quebrado.
+
+## Atualizações independentes
+
+```text
+Alteração somente no app
+→ publique o repositório do app
+→ o mesmo endereço do Netlify recebe a nova versão
+→ a landing passa a mostrar a atualização automaticamente
+
+Alteração somente na landing
+→ publique este repositório
+→ o app não é recompilado nem alterado
+```
 
 ## Executar localmente
 
-Requer Node.js 18.18 ou superior.
+Requer Node.js 20.
+
+1. Copie `.env.example` para `.env.local`.
+2. Preencha a URL do app:
+
+```text
+VITE_GAME_URL=https://nome-do-app.netlify.app
+```
+
+3. Execute:
 
 ```bash
 npm install
@@ -15,71 +95,37 @@ npm run dev
 
 Acesse o endereço indicado pelo Vite, normalmente `http://localhost:5173`.
 
+## Deploy da landing no Netlify
 
-## Importar no StackBlitz
+As configurações estão registradas em `netlify.toml`:
 
-Este pacote foi preparado para importação direta no StackBlitz:
-
-1. Crie um projeto por **Upload Project**.
-2. Selecione o arquivo ZIP inteiro.
-3. O StackBlitz executará `npm install` e `npm run dev`.
-4. A aplicação será aberta na porta 5173.
-
-O `package-lock.json` usa exclusivamente o registro público do npm. O arquivo `.npmrc` também fixa esse registro para evitar travamentos durante a instalação.
-
-## Gerar produção
-
-```bash
-npm run build
-npm run preview
+```text
+Diretório base: vazio
+Comando de construção: npm run build
+Diretório de publicação: dist
+Diretório de funções: vazio
+Node: 20
 ```
-
-A pasta final será `dist`.
 
 ## Formulário de leads
 
-O formulário foi reduzido para nome, WhatsApp, perfil/canal, fase da oferta e uma descrição opcional do método. A página está preparada para **Netlify Forms**, sem necessidade de backend:
+A página continua preparada para **Netlify Forms**, sem backend adicional.
 
-1. Publique o projeto no Netlify.
-2. O formulário `detailer-leads` será detectado pelo formulário estático existente em `index.html`.
-3. Os envios aparecerão em **Forms** no painel do site.
-
-Em hospedagens que não processam Netlify Forms, conecte a função `submitLead` em `src/App.tsx` ao endpoint de sua preferência.
-
-## Jogo incorporado
-
-O jogo foi compilado com base `/game/` e está dentro de `public/game`.
-
-- Landing page: `/`
-- Jogo isolado: `/game/index.html`
-
-Não altere o caminho do iframe sem também ajustar a base usada na compilação do jogo.
+- Nome do formulário: `detailer-leads`
+- Os envios aparecem no painel do projeto em **Forms**.
+- Notificações por e-mail podem ser ativadas em **Project configuration → Notifications**.
 
 ## Estrutura principal
 
 ```text
 src/
-  App.tsx          Conteúdo, componentes e interações da landing
-  styles.css       Identidade visual e responsividade
-  assets/          Capturas reais do produto e imagem de apoio
+  App.tsx              Conteúdo, componentes e integração do iframe
+  styles.css           Identidade visual, responsividade e overlay mobile
+  runtime-config.d.ts  Tipagem da configuração pública
+  assets/              Capturas reais do produto
 public/
-  game/            Build completo do Detailer Business 1.3.3
-  _redirects       Fallback de SPA para Netlify
-index.html         SEO e formulário estático do Netlify
+  app-config.js        Configuração alternativa da URL do app
+  _redirects           Fallback da landing no Netlify
+.env.example           Exemplo da variável VITE_GAME_URL
+netlify.toml           Build e publicação no Netlify
 ```
-
-## Conteúdo comercial
-
-A página foi construída para posicionar o produto como:
-
-- ferramenta didática profissional;
-- extensão do método do criador;
-- aplicação para cursos, mentorias e comunidades;
-- experiência baseada em decisão, consequência e diagnóstico;
-- produto personalizável, e não um jogo genérico de oficina;
-- implantação sob medida, com escopo e valor definidos antes do desenvolvimento;
-- possibilidade de começar por uma versão essencial e evoluir após validação.
-
-## Referências de mercado
-
-A landing cita Duolingo, Codecademy e Kahoot! apenas como referências públicas do princípio de aprendizagem interativa. A própria página deixa explícito que essas marcas não são clientes, parceiros ou cases do Detailer Business.

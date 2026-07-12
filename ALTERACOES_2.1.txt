@@ -1,0 +1,28 @@
+DETAILER BUSINESS — LANDING PAGE 2.1
+
+OBJETIVO
+Separar definitivamente a landing page do projeto do app, permitindo que cada um seja atualizado e publicado de forma independente.
+
+ALTERAÇÕES APLICADAS
+- Removido o build local do jogo que existia em public/game.
+- Removidos todos os caminhos fixos para /game/index.html.
+- Criada integração por URL pública usando VITE_GAME_URL.
+- Adicionado fallback configurável em public/app-config.js.
+- O iframe recebe automaticamente os parâmetros embed=1 e source=landing.
+- O botão de nova guia usa o endereço público do app.
+- O modo tela cheia do desktop continua preservado.
+- No celular, a demonstração passou a abrir em overlay fixo com 100dvh.
+- A rolagem da landing é bloqueada enquanto o jogo está aberto no celular.
+- Adicionado fechamento por botão e pela tecla Escape.
+- Adicionada prévia mobile no lugar do iframe vertical dentro da página.
+- Adicionado estado de configuração quando a URL do app ainda não foi informada.
+- Adicionado netlify.toml com build, publicação e Node 20.
+- Adicionados .nvmrc e .env.example.
+- README e instruções do StackBlitz atualizados.
+- Formulário Netlify, copy, identidade visual e demais seções preservados.
+
+ATUALIZAÇÃO INDEPENDENTE
+Depois de configurar uma URL estável do app, novos deploys do app passam a ser carregados pela landing automaticamente. Não é necessário copiar arquivos do jogo nem publicar novamente a landing.
+
+OBSERVAÇÃO
+Esta versão resolve a separação dos projetos e a apresentação do iframe no celular. O redesenho interno do jogo para funcionar sem rolagem durante as decisões deve ser realizado no repositório do app, sem alterar esta landing.

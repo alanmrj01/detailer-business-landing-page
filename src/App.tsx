@@ -6,6 +6,17 @@ import settingsImage from './assets/configuracoes.webp';
 import mobileImage from './assets/celular-decisao.webp';
 import growthImage from './assets/growth.webp';
 
+const normalizeExternalUrl = (value?: string) => value?.trim().replace(/\/+$/, '') ?? '';
+
+const configuredGameBaseUrl = normalizeExternalUrl(
+  import.meta.env.VITE_GAME_URL || window.DETAILER_CONFIG?.gameUrl,
+);
+
+const gameDirectUrl = configuredGameBaseUrl ? `${configuredGameBaseUrl}/` : '';
+const gameEmbedUrl = configuredGameBaseUrl
+  ? `${configuredGameBaseUrl}/?embed=1&source=landing`
+  : '';
+
 type IconName =
   | 'arrow'
   | 'brain'
@@ -246,6 +257,10 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(1);
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    window.matchMedia('(max-width: 760px)').matches,
+  );
   const demoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -265,16 +280,49 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 760px)');
+    const syncViewport = () => setIsMobileViewport(media.matches);
+
+    syncViewport();
+    media.addEventListener('change', syncViewport);
+    return () => media.removeEventListener('change', syncViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!mobileDemoOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileDemoOpen(false);
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [mobileDemoOpen]);
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setMenuOpen(false);
   };
 
   const enterFullscreen = async () => {
+    if (!gameEmbedUrl) return;
+
+    if (isMobileViewport) {
+      setMobileDemoOpen(true);
+      return;
+    }
+
     if (demoRef.current?.requestFullscreen) {
       await demoRef.current.requestFullscreen();
     } else {
-      window.open('/game/index.html', '_blank', 'noopener,noreferrer');
+      window.open(gameDirectUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -501,23 +549,59 @@ function App() {
                 <div>
                   <span className="live-dot" />
                   <strong>Detailer Business</strong>
-                  <small>Experiência do aluno</small>
+                  <small>App publicado e atualizado de forma independente</small>
                 </div>
                 <div className="demo-actions">
-                  <a href="/game/index.html" target="_blank" rel="noreferrer">Abrir em nova guia</a>
-                  <button type="button" onClick={enterFullscreen} aria-label="Abrir demonstração em tela cheia">
+                  {gameDirectUrl ? (
+                    <a href={gameDirectUrl} target="_blank" rel="noreferrer">Abrir em nova guia</a>
+                  ) : (
+                    <span className="demo-action-disabled">App não conectado</span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={enterFullscreen}
+                    aria-label="Abrir demonstração em tela cheia"
+                    disabled={!gameEmbedUrl}
+                  >
                     <Icon name="fullscreen" size={18} /> Tela cheia
                   </button>
                 </div>
               </div>
-              <iframe
-                src="/game/index.html"
-                title="Demonstração interativa do Detailer Business"
-                loading="lazy"
-                allow="fullscreen; clipboard-write"
-              />
+
+              {gameEmbedUrl ? (
+                isMobileViewport ? (
+                  <div className="demo-mobile-preview">
+                    <img src={coverImage} alt="Prévia da demonstração do Detailer Business" />
+                    <div className="demo-mobile-preview__content">
+                      <span><Icon name="play" size={18} /> Demonstração interativa</span>
+                      <h3>Abra o app ocupando toda a tela do celular.</h3>
+                      <p>A landing fica em segundo plano e você retorna exatamente ao mesmo ponto ao fechar.</p>
+                      <button className="button" type="button" onClick={() => setMobileDemoOpen(true)}>
+                        Experimentar em tela cheia <Icon name="fullscreen" size={18} />
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="demo-desktop-frame">
+                    <iframe
+                      src={gameEmbedUrl}
+                      title="Demonstração interativa do Detailer Business"
+                      loading="lazy"
+                      allow="fullscreen; clipboard-write"
+                      allowFullScreen
+                      referrerPolicy="strict-origin-when-cross-origin"
+                    />
+                  </div>
+                )
+              ) : (
+                <div className="demo-setup-state">
+                  <span><Icon name="layers" size={25} /></span>
+                  <h3>Conecte o endereço público do app.</h3>
+                  <p>Defina <code>VITE_GAME_URL</code> no Netlify com a URL do projeto do jogo. Depois disso, esta área passa a carregar a versão online automaticamente.</p>
+                </div>
+              )}
             </div>
-            <p className="demo-note"><Icon name="shield" size={15} /> A demonstração roda isolada dentro da página e não envia os dados da partida.</p>
+            <p className="demo-note"><Icon name="shield" size={15} /> O jogo roda em um projeto separado. Novos deploys do app aparecem aqui sem republicar a landing.</p>
           </div>
         </section>
 
@@ -781,6 +865,27 @@ function App() {
           </div>
         </section>
       </main>
+
+      {mobileDemoOpen && gameEmbedUrl ? (
+        <div className="mobile-demo-overlay" role="dialog" aria-modal="true" aria-label="Demonstração do Detailer Business">
+          <div className="mobile-demo-overlay__bar">
+            <div>
+              <span className="live-dot" />
+              <strong>Detailer Business</strong>
+            </div>
+            <button type="button" onClick={() => setMobileDemoOpen(false)} aria-label="Fechar demonstração">
+              Fechar
+            </button>
+          </div>
+          <iframe
+            src={gameEmbedUrl}
+            title="Demonstração interativa do Detailer Business em tela cheia"
+            allow="fullscreen; clipboard-write"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </div>
+      ) : null}
 
       <div className="mobile-conversion-bar">
         <button type="button" onClick={() => scrollTo('contato')}>Quero um app com meu método <Icon name="arrow" size={17} /></button>
