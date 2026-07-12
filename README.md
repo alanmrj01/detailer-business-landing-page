@@ -13,7 +13,19 @@ npm install
 npm run dev
 ```
 
-Acesse o endereço indicado pelo Vite, normalmente `http://localhost:5174`.
+Acesse o endereço indicado pelo Vite, normalmente `http://localhost:5173`.
+
+
+## Importar no StackBlitz
+
+Este pacote foi preparado para importação direta no StackBlitz:
+
+1. Crie um projeto por **Upload Project**.
+2. Selecione o arquivo ZIP inteiro.
+3. O StackBlitz executará `npm install` e `npm run dev`.
+4. A aplicação será aberta na porta 5173.
+
+O `package-lock.json` usa exclusivamente o registro público do npm. O arquivo `.npmrc` também fixa esse registro para evitar travamentos durante a instalação.
 
 ## Gerar produção
 
@@ -39,7 +51,7 @@ Em hospedagens que não processam Netlify Forms, conecte a função `submitLead`
 O jogo foi compilado com base `/game/` e está dentro de `public/game`.
 
 - Landing page: `/`
-- Jogo isolado: `/game/`
+- Jogo isolado: `/game/index.html`
 
 Não altere o caminho do iframe sem também ajustar a base usada na compilação do jogo.
 

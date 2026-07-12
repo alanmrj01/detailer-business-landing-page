@@ -214,7 +214,7 @@ function App() {
     if (demoRef.current?.requestFullscreen) {
       await demoRef.current.requestFullscreen();
     } else {
-      window.open('/game/', '_blank', 'noopener,noreferrer');
+      window.open('/game/index.html', '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -442,14 +442,14 @@ function App() {
                   <small>Experiência do aluno</small>
                 </div>
                 <div className="demo-actions">
-                  <a href="/game/" target="_blank" rel="noreferrer">Abrir em nova guia</a>
+                  <a href="/game/index.html" target="_blank" rel="noreferrer">Abrir em nova guia</a>
                   <button type="button" onClick={enterFullscreen} aria-label="Abrir demonstração em tela cheia">
                     <Icon name="fullscreen" size={18} /> Tela cheia
                   </button>
                 </div>
               </div>
               <iframe
-                src="/game/"
+                src="/game/index.html"
                 title="Demonstração interativa do Detailer Business"
                 loading="lazy"
                 allow="fullscreen; clipboard-write"
