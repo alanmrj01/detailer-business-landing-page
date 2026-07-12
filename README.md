@@ -1,4 +1,4 @@
-# Detailer Business — Landing Page comercial
+# Detailer Business — Landing Page comercial 1.1
 
 Landing page em React + Vite + TypeScript criada para apresentar o Detailer Business a criadores de conteúdo da estética automotiva.
 
@@ -38,7 +38,7 @@ A pasta final será `dist`.
 
 ## Formulário de leads
 
-A página está preparada para **Netlify Forms**, sem necessidade de backend:
+O formulário foi reduzido para nome, WhatsApp, perfil/canal, fase da oferta e uma descrição opcional do método. A página está preparada para **Netlify Forms**, sem necessidade de backend:
 
 1. Publique o projeto no Netlify.
 2. O formulário `detailer-leads` será detectado pelo formulário estático existente em `index.html`.
@@ -76,4 +76,10 @@ A página foi construída para posicionar o produto como:
 - extensão do método do criador;
 - aplicação para cursos, mentorias e comunidades;
 - experiência baseada em decisão, consequência e diagnóstico;
-- produto personalizável, e não um jogo genérico de oficina.
+- produto personalizável, e não um jogo genérico de oficina;
+- implantação sob medida, com escopo e valor definidos antes do desenvolvimento;
+- possibilidade de começar por uma versão essencial e evoluir após validação.
+
+## Referências de mercado
+
+A landing cita Duolingo, Codecademy e Kahoot! apenas como referências públicas do princípio de aprendizagem interativa. A própria página deixa explícito que essas marcas não são clientes, parceiros ou cases do Detailer Business.
