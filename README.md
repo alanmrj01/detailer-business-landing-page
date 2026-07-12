@@ -1,6 +1,12 @@
-# Detailer Business — Landing Page comercial 2.1
+# Detailer Business — Landing Page comercial 2.2
 
 Landing page em React + Vite + TypeScript criada para apresentar o Detailer Business a criadores de conteúdo da estética automotiva.
+
+## Refinamento visual 2.2
+
+Esta versão reduz a densidade da experiência mobile, encurta textos secundários e reforça o contraste de títulos, subtítulos, cards e textos sobre imagens. O iframe, o formulário Netlify e a arquitetura de atualização independente do app foram preservados.
+
+> O conteúdo interno do jogo é carregado de outro domínio. Por segurança, a landing não injeta CSS nem modifica o DOM do app dentro do iframe. Ajustes em textos da abertura do jogo precisam ser publicados no repositório do app.
 
 ## Arquitetura desta versão
 

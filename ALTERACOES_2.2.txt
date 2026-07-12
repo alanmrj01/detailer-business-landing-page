@@ -1,0 +1,23 @@
+DETAILER BUSINESS LANDING PAGE 2.2
+
+Objetivo
+- Reduzir poluição visual, especialmente em celulares.
+- Reforçar contraste de títulos, subtítulos e textos sobre fundos escuros ou imagens.
+- Preservar iframe externo, formulário Netlify, responsividade, identidade visual e integrações existentes.
+
+Alterações
+- Copy secundária encurtada sem mudar a proposta comercial.
+- Títulos principais mais objetivos.
+- Cores de textos secundários recalibradas para maior contraste.
+- Painéis e legendas sobre imagens receberam fundos mais opacos.
+- Primeira dobra mobile perdeu elementos redundantes (cards flutuantes e barra de provas).
+- Cards de problemas, mecanismo, referências e resultados foram compactados no celular.
+- Referências de mercado permanecem visíveis, porém com menos texto no mobile.
+- Demonstração mobile ganhou prévia com gradiente mais forte e texto mais legível.
+- A barra superior duplicada da demonstração em tela cheia foi removida.
+- O botão Fechar virou um controle flutuante compacto.
+- Espaçamentos e alturas mobile foram reduzidos sem diminuir a legibilidade.
+
+Observação importante
+- A landing não consegue alterar o conteúdo interno do app publicado em outro domínio e carregado por iframe.
+- Textos internos do jogo, como o subtítulo destacado no print enviado, precisam ser corrigidos no projeto do app.

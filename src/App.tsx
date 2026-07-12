@@ -50,17 +50,17 @@ const painPoints = [
   {
     icon: 'video' as IconName,
     title: 'O aluno assiste, concorda e esquece',
-    text: 'Vídeos e PDFs explicam o conteúdo, mas nem sempre obrigam o aluno a tomar uma decisão quando o cenário muda.',
+    text: 'Vídeos e PDFs explicam. A experiência mostra se o aluno sabe decidir quando o cenário muda.',
   },
   {
     icon: 'layers' as IconName,
     title: 'Seu método parece “mais um curso”',
-    text: 'Mesmo quando o conteúdo é excelente, o formato pode ser parecido com dezenas de outras ofertas do mesmo nicho.',
+    text: 'Mesmo com conteúdo excelente, o formato pode parecer igual ao de outras ofertas do nicho.',
   },
   {
     icon: 'target' as IconName,
     title: 'O valor fica difícil de enxergar',
-    text: 'Sem aplicação prática, o aluno demora para perceber a profundidade do seu raciocínio e a diferença da sua metodologia.',
+    text: 'Sem prática, o aluno demora para perceber a lógica e o valor do seu método.',
   },
 ];
 
@@ -68,17 +68,17 @@ const benefits = [
   {
     icon: 'decisions' as IconName,
     title: 'O aluno precisa decidir',
-    text: 'Ele entra em cenários inspirados na realidade da estética automotiva e escolhe como conduzir a operação.',
+    text: 'Ele enfrenta cenários reais e escolhe como conduzir a operação.',
   },
   {
     icon: 'chart' as IconName,
     title: 'Cada escolha produz efeito',
-    text: 'Caixa, reputação, qualidade, capacidade, risco e carga de trabalho mudam conforme as decisões tomadas.',
+    text: 'Os indicadores mudam conforme cada decisão tomada.',
   },
   {
     icon: 'diagnosis' as IconName,
     title: 'O resultado ensina o porquê',
-    text: 'A jornada termina com classificação, fortalezas, atenções e próximos passos baseados no seu método.',
+    text: 'O resultado explica acertos, riscos e próximos passos com a sua régua.',
   },
 ];
 
@@ -106,39 +106,38 @@ const marketReferences = [
 const creatorControls = [
   'Sua marca, logo, cores e linguagem',
   'Seus cenários, escolhas e consequências',
-  'Seus preços, equipamentos e referências de mercado',
-  'Seus indicadores, pesos e critérios de avaliação',
-  'Seu diagnóstico e suas orientações pedagógicas',
+  'Seus preços, equipamentos e referências',
+  'Seus critérios de avaliação, diagnóstico e orientações',
 ];
 
 const creatorOutcomes = [
   {
     icon: 'brand' as IconName,
     title: 'Mais valor percebido',
-    text: 'Sua oferta ganha uma ferramenta própria, memorável e conectada à sua autoridade.',
+    text: 'Sua oferta ganha uma ferramenta própria e conectada à sua autoridade.',
   },
   {
     icon: 'brain' as IconName,
     title: 'Método mais fácil de entender',
-    text: 'O aluno enxerga a lógica do que você ensina quando precisa aplicar e lidar com a consequência.',
+    text: 'O aluno entende sua lógica ao aplicar e lidar com a consequência.',
   },
   {
     icon: 'community' as IconName,
     title: 'Mais assunto para a comunidade',
-    text: 'Resultados diferentes geram análise, comparação, debate e novos conteúdos para a audiência.',
+    text: 'Resultados diferentes geram análise, debate e novos conteúdos.',
   },
   {
     icon: 'sparkles' as IconName,
     title: 'Diferenciação concreta',
-    text: 'Você deixa de competir apenas por quantidade de aulas, bônus ou promessa de transformação.',
+    text: 'Você deixa de competir apenas por quantidade de aulas e bônus.',
   },
 ];
 
 const processSteps = [
-  ['01', 'Conversa inicial', 'Entendemos sua oferta, audiência e o que você já ensina.'],
-  ['02', 'Mapeamento do método', 'Organizamos decisões, critérios, consequências e diagnóstico.'],
-  ['03', 'Personalização', 'Adaptamos identidade, conteúdo e experiência ao seu posicionamento.'],
-  ['04', 'Entrega e validação', 'Você recebe o app pronto para testar e inserir na sua oferta.'],
+  ['01', 'Conversa inicial', 'Entendemos sua oferta, audiência e método.'],
+  ['02', 'Mapeamento do método', 'Organizamos decisões, consequências e diagnóstico.'],
+  ['03', 'Personalização', 'Adaptamos identidade e experiência ao seu posicionamento.'],
+  ['04', 'Entrega e validação', 'Você recebe o app pronto para validar e usar.'],
 ] as const;
 
 const faqs = [
@@ -258,6 +257,7 @@ function App() {
   const [activeFaq, setActiveFaq] = useState<number | null>(1);
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
+  const [showMobileCta, setShowMobileCta] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(() =>
     window.matchMedia('(max-width: 760px)').matches,
   );
@@ -287,6 +287,21 @@ function App() {
     syncViewport();
     media.addEventListener('change', syncViewport);
     return () => media.removeEventListener('change', syncViewport);
+  }, []);
+
+  useEffect(() => {
+    const syncCta = () => {
+      const threshold = Math.min(window.innerHeight * 0.85, 720);
+      setShowMobileCta(window.scrollY > threshold);
+    };
+
+    syncCta();
+    window.addEventListener('scroll', syncCta, { passive: true });
+    window.addEventListener('resize', syncCta);
+    return () => {
+      window.removeEventListener('scroll', syncCta);
+      window.removeEventListener('resize', syncCta);
+    };
   }, []);
 
   useEffect(() => {
@@ -380,11 +395,10 @@ function App() {
         <section className="hero" id="inicio">
           <div className="hero-grid container">
             <div className="hero-copy" data-reveal>
-              <span className="hero-kicker"><Icon name="sparkles" size={17} /> Para criadores que ensinam estética automotiva</span>
+              <span className="hero-kicker"><Icon name="sparkles" size={17} /> Para criadores de estética automotiva</span>
               <h1>Transforme seu método em um simulador que faz o aluno <em>pensar como profissional.</em></h1>
               <p>
-                Nós transformamos o que você ensina em uma experiência com cenários, decisões, consequências e diagnóstico —
-                com a sua marca e pronta para usar no seu curso, mentoria ou comunidade.
+                Transformamos seu método em cenários, decisões e diagnóstico — com sua marca, pronto para curso, mentoria ou comunidade.
               </p>
               <div className="hero-actions">
                 <button className="button button--hero" type="button" onClick={() => scrollTo('contato')}>
@@ -397,8 +411,8 @@ function App() {
               <div className="hero-price-note">
                 <Icon name="money" size={18} />
                 <div>
-                  <strong>Projeto sob medida, sem pacote engessado.</strong>
-                  <span>Escopo e investimento são combinados antes do desenvolvimento.</span>
+                  <strong>Comece pelo escopo certo para a sua oferta.</strong>
+                  <span>Entregas e investimento são definidos antes do desenvolvimento.</span>
                 </div>
               </div>
             </div>
@@ -435,8 +449,8 @@ function App() {
           <div className="container">
             <SectionHeading
               eyebrow="O problema não é o seu conteúdo"
-              title="Seu curso pode ser excelente e ainda parecer igual a todos os outros."
-              text="Quando a experiência termina em vídeo, PDF e grupo, o aluno entende a teoria — mas nem sempre percebe o valor do seu raciocínio ou sabe aplicá-lo diante de uma decisão real."
+              title="Conteúdo bom ainda pode parecer igual a todos os outros."
+              text="Vídeo e PDF explicam. A aplicação prática mostra se o aluno sabe decidir."
               align="center"
             />
             <div className="problem-grid">
@@ -461,8 +475,8 @@ function App() {
           <div className="container">
             <SectionHeading
               eyebrow="O mecanismo"
-              title="Você ensina o método. O app faz o aluno vivê-lo."
-              text="A experiência organiza o aprendizado em um ciclo simples e difícil de esquecer: contexto, decisão, consequência e diagnóstico."
+              title="Seu método vira uma experiência prática."
+              text="Contexto, decisão, consequência e diagnóstico em uma jornada fácil de entender."
               align="center"
             />
             <div className="benefit-grid">
@@ -535,8 +549,8 @@ function App() {
             <div className="experience-heading">
               <SectionHeading
                 eyebrow="Experimente antes de conversar"
-                title="Não imagine como funciona. Jogue alguns minutos."
-                text="A demonstração abaixo é o MVP real. Comece a jornada, tome decisões e observe como o diagnóstico é construído."
+                title="Veja o método funcionando na prática."
+                text="Abra o MVP, tome algumas decisões e veja o diagnóstico sendo construído."
               />
               <div className="experience-instructions">
                 <span><i /> Demonstração incorporada</span>
@@ -574,8 +588,8 @@ function App() {
                     <img src={coverImage} alt="Prévia da demonstração do Detailer Business" />
                     <div className="demo-mobile-preview__content">
                       <span><Icon name="play" size={18} /> Demonstração interativa</span>
-                      <h3>Abra o app ocupando toda a tela do celular.</h3>
-                      <p>A landing fica em segundo plano e você retorna exatamente ao mesmo ponto ao fechar.</p>
+                      <h3>Teste o simulador em tela cheia.</h3>
+                      <p>Jogue alguns minutos e volte para a página ao fechar.</p>
                       <button className="button" type="button" onClick={() => setMobileDemoOpen(true)}>
                         Experimentar em tela cheia <Icon name="fullscreen" size={18} />
                       </button>
@@ -618,8 +632,8 @@ function App() {
             <div className="creator-copy" data-reveal>
               <SectionHeading
                 eyebrow="Não é um app genérico"
-                title="A experiência fala com a sua voz e avalia com a sua régua."
-                text="O criador não recebe um jogo pronto com a logo trocada. A estrutura é adaptada para representar o que ele realmente ensina."
+                title="Sua voz, sua marca e sua régua de avaliação."
+                text="A experiência é adaptada para representar o que você realmente ensina."
               />
               <ul className="control-list">
                 {creatorControls.map((item) => (
@@ -642,8 +656,8 @@ function App() {
             <div className="result-copy" data-reveal>
               <SectionHeading
                 eyebrow="O aluno não recebe só uma nota"
-                title="O diagnóstico mostra onde ele acertou, onde se arriscou e o que precisa amadurecer."
-                text="Isso transforma o fim da experiência em oportunidade de aula, discussão, conteúdo e direcionamento dentro da sua oferta."
+                title="O aluno entende o que acertou e o que precisa melhorar."
+                text="O resultado vira aula, discussão e direcionamento dentro da sua oferta."
               />
               <div className="diagnosis-points">
                 <div><span><Icon name="check" size={17} /></span><p><strong>Visão geral</strong> traduz o estágio atual da operação.</p></div>
@@ -663,8 +677,8 @@ function App() {
             <div className="investment-copy" data-reveal>
               <SectionHeading
                 eyebrow="Investimento sem surpresa"
-                title="Você não precisa começar por uma plataforma maior do que a sua necessidade."
-                text="O Detailer Business é uma implantação personalizada. Primeiro entendemos seu método; depois apresentamos o escopo, o que será entregue e o valor correspondente."
+                title="Comece pelo escopo que faz sentido."
+                text="Entendemos seu método e apresentamos escopo, entregas e valor antes de começar."
               />
               <div className="investment-points">
                 <div><span><Icon name="check" size={16} /></span><p><strong>Conversa inicial sem compromisso</strong> para entender se o projeto faz sentido.</p></div>
@@ -711,8 +725,8 @@ function App() {
           <div className="container">
             <SectionHeading
               eyebrow="O que muda na sua oferta"
-              title="Você deixa de vender apenas conteúdo e passa a entregar uma experiência própria."
-              text="O app não substitui suas aulas. Ele mostra ao aluno por que seu método tem estrutura, lógica e aplicação."
+              title="Sua oferta deixa de entregar só conteúdo."
+              text="O app complementa suas aulas e torna a lógica do seu método visível."
               align="center"
             />
             <div className="outcomes-grid">
@@ -756,8 +770,8 @@ function App() {
             <div className="use-case-copy" data-reveal>
               <SectionHeading
                 eyebrow="Onde encaixar"
-                title="Use a experiência sem reconstruir o produto que você já vende."
-                text="Ela pode entrar antes, durante ou depois do conteúdo, de acordo com o objetivo da sua oferta."
+                title="Use sem reconstruir o seu curso."
+                text="A experiência pode entrar antes, durante ou depois do conteúdo."
               />
               <div className="use-case-list">
                 {[
@@ -785,8 +799,8 @@ function App() {
             <div data-reveal>
               <SectionHeading
                 eyebrow="Perguntas frequentes"
-                title="As respostas que você precisa antes de conversar com a gente."
-                text="Sem promessa vaga: a proposta é entender seu método, definir um escopo possível e entregar uma experiência útil para a sua audiência."
+                title="O que você precisa saber antes de conversar."
+                text="Entendemos seu método, definimos um escopo possível e mostramos o que será entregue."
               />
             </div>
             <div className="faq-list" data-reveal>
@@ -810,9 +824,9 @@ function App() {
           <div className="container contact-card">
             <div className="contact-copy" data-reveal>
               <span className="eyebrow">Vamos avaliar o seu caso</span>
-              <h2>Seu método já existe. Agora ele pode virar uma experiência que o aluno lembra.</h2>
+              <h2>Seu método pode virar uma experiência que o aluno lembra.</h2>
               <p>
-                Envie seus dados e conte em que fase está sua oferta. A primeira conversa serve para entender se o Detailer Business faz sentido e qual seria o melhor escopo para começar.
+                Envie seus dados. A primeira conversa serve para avaliar se o projeto faz sentido e qual escopo é ideal para começar.
               </p>
               <div className="contact-proof">
                 <span><Icon name="check" size={16} /> Conversa sem compromisso</span>
@@ -868,15 +882,14 @@ function App() {
 
       {mobileDemoOpen && gameEmbedUrl ? (
         <div className="mobile-demo-overlay" role="dialog" aria-modal="true" aria-label="Demonstração do Detailer Business">
-          <div className="mobile-demo-overlay__bar">
-            <div>
-              <span className="live-dot" />
-              <strong>Detailer Business</strong>
-            </div>
-            <button type="button" onClick={() => setMobileDemoOpen(false)} aria-label="Fechar demonstração">
-              Fechar
-            </button>
-          </div>
+          <button
+            className="mobile-demo-overlay__close"
+            type="button"
+            onClick={() => setMobileDemoOpen(false)}
+            aria-label="Fechar demonstração"
+          >
+            <span aria-hidden="true">×</span> Fechar
+          </button>
           <iframe
             src={gameEmbedUrl}
             title="Demonstração interativa do Detailer Business em tela cheia"
@@ -887,7 +900,7 @@ function App() {
         </div>
       ) : null}
 
-      <div className="mobile-conversion-bar">
+      <div className={showMobileCta ? 'mobile-conversion-bar mobile-conversion-bar--visible' : 'mobile-conversion-bar'}>
         <button type="button" onClick={() => scrollTo('contato')}>Quero um app com meu método <Icon name="arrow" size={17} /></button>
       </div>
 
