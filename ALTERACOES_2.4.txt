@@ -1,0 +1,45 @@
+DETAILER BUSINESS LANDING PAGE 2.4
+
+Alterações cirúrgicas aplicadas sobre a versão 2.3:
+
+1. Referência de mercado
+- Codecademy substituída por Electude.
+- Nova ilustração vetorial própria sobre simulação e diagnóstico automotivo.
+- Aviso de independência das marcas preservado.
+
+2. Oferta e conversão
+- CTAs de conversa substituídos por teste de 14 dias.
+- Linguagem reorganizada para transmitir implantação rápida e simples.
+- Piloto com público apresentado antes do investimento.
+- Comunicação explícita de ausência de cobrança por aluno e participação nas vendas.
+- Processo de implantação simplificado em quatro passos.
+- Formulário e mensagens de sucesso alinhados ao piloto.
+- FAQ reescrito com linguagem próxima e objetiva.
+
+3. Desempenho
+- FAQ isolado em componente próprio, evitando renderização da página inteira ao abrir respostas.
+- Removida animação de altura do FAQ.
+- Animações de entrada desativadas em telas pequenas e em preferência por movimento reduzido.
+- Imagens abaixo da dobra com lazy loading e decodificação assíncrona.
+- Dimensões explícitas adicionadas para reduzir mudanças de layout.
+- Seções abaixo da dobra com content-visibility em navegadores compatíveis.
+- Backdrop blur reduzido ou removido nas áreas mais custosas, mantendo aparência equivalente.
+- Hero limitado a uma área visual estável, sem a imagem alta determinar a altura inteira da primeira dobra.
+
+4. Hero
+- Espaçamento vertical reduzido.
+- Ilustração original do app preservada e enquadrada dentro do celular.
+- Copy e aparelho permanecem lado a lado, com distribuição vertical mais equilibrada.
+
+5. Segurança
+- Validação do endereço externo do app: somente HTTPS ou localhost em desenvolvimento.
+- Política CSP para scripts, estilos, imagens, formulários e iframe.
+- HSTS, nosniff, proteção de enquadramento, política de permissões e referrer policy.
+- Honeypot do Netlify preservado.
+- Limites de tamanho e autocomplete apropriado nos campos do formulário.
+- Cache seguro: assets imutáveis e app-config sem cache.
+
+6. Rodapé
+- Mensagem padrão de direitos reservados adicionada.
+
+Nenhuma alteração foi feita no app externo, na URL independente do iframe, no nome do formulário Netlify ou na identidade visual aprovada.
