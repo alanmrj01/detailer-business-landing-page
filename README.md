@@ -1,56 +1,40 @@
-# Detailer Business — Landing Page comercial 2.2
+# Detailer Business — Landing Page comercial 2.3
 
-Landing page em React + Vite + TypeScript criada para apresentar o Detailer Business a criadores de conteúdo da estética automotiva.
+Landing page em React + Vite + TypeScript para apresentar o Detailer Business a criadores de conteúdo da estética automotiva.
 
-## Refinamento visual 2.2
+## O que mudou na versão 2.3
 
-Esta versão reduz a densidade da experiência mobile, encurta textos secundários e reforça o contraste de títulos, subtítulos, cards e textos sobre imagens. O iframe, o formulário Netlify e a arquitetura de atualização independente do app foram preservados.
+- Comunicação mais direta na primeira dobra.
+- Demonstração posicionada logo no início da página.
+- Menos seções e menos repetição de argumentos.
+- Benefício comercial explícito sem desvalorizar o conteúdo do criador.
+- Explicação clara de como escopo e investimento são definidos.
+- Formulário mais próximo da decisão de contato.
+- Ilustrações próprias para os exemplos de Duolingo, Codecademy e Kahoot!.
+- Aviso explícito de que as plataformas citadas são referências públicas, não clientes ou parceiros.
 
-> O conteúdo interno do jogo é carregado de outro domínio. Por segurança, a landing não injeta CSS nem modifica o DOM do app dentro do iframe. Ajustes em textos da abertura do jogo precisam ser publicados no repositório do app.
+O histórico detalhado está em `ALTERACOES_2.3.txt`.
 
-## Arquitetura desta versão
+## Arquitetura
 
 O app e a landing são projetos independentes:
 
-- **Landing page:** este repositório.
+- **Landing page:** este projeto.
 - **App/jogo:** projeto próprio publicado em outro endereço do Netlify.
 
-A landing carrega a URL pública do app em um `iframe`. Portanto, depois que a integração é configurada uma vez, qualquer atualização publicada no projeto do app aparece automaticamente na demonstração, sem recompilar ou republicar a landing.
-
-O build local do jogo deixou de existir em `public/game`.
+A landing carrega a URL pública do app em um `iframe`. Depois da configuração inicial, novos deploys do app aparecem automaticamente na demonstração sem exigir uma nova publicação da landing.
 
 ## Configurar a URL do app no Netlify
 
-Depois de publicar o app e obter um endereço como:
-
-```text
-https://nome-do-app.netlify.app
-```
-
-No projeto da **landing page** no Netlify:
-
-1. Abra **Project configuration**.
-2. Entre em **Environment variables**.
-3. Crie a variável:
+No projeto da landing, crie a variável:
 
 ```text
 VITE_GAME_URL=https://nome-do-app.netlify.app
 ```
 
-4. Não coloque barra no final da URL.
-5. Faça um novo deploy da landing usando **Deploys → Trigger deploy**.
+Não coloque barra no final. Depois faça um novo deploy da landing.
 
-O código adiciona automaticamente `?embed=1&source=landing` ao iframe. O parâmetro não quebra versões antigas do app e poderá ativar o modo incorporado quando ele for implementado no jogo.
-
-### Configuração alternativa por arquivo
-
-Também é possível preencher a URL em:
-
-```text
-public/app-config.js
-```
-
-Exemplo:
+Como alternativa, preencha `public/app-config.js`:
 
 ```js
 window.DETAILER_CONFIG = {
@@ -58,52 +42,28 @@ window.DETAILER_CONFIG = {
 };
 ```
 
-A variável `VITE_GAME_URL` tem prioridade sobre esse arquivo.
+A variável `VITE_GAME_URL` tem prioridade.
 
 ## Comportamento da demonstração
 
-- No desktop, o app aparece diretamente dentro da seção **Experiência ao vivo**.
-- No celular, a landing mostra uma prévia e abre o app em um iframe que ocupa toda a tela.
-- Ao fechar a demonstração no celular, o visitante volta ao mesmo ponto da landing.
-- O botão **Abrir em nova guia** leva para o projeto independente do app.
-- Se a URL ainda não estiver configurada, a landing apresenta uma orientação de configuração em vez de carregar um iframe quebrado.
-
-## Atualizações independentes
-
-```text
-Alteração somente no app
-→ publique o repositório do app
-→ o mesmo endereço do Netlify recebe a nova versão
-→ a landing passa a mostrar a atualização automaticamente
-
-Alteração somente na landing
-→ publique este repositório
-→ o app não é recompilado nem alterado
-```
+- Desktop: app incorporado diretamente na página.
+- Celular: prévia com abertura do iframe em tela cheia.
+- O visitante retorna ao mesmo ponto da landing ao fechar.
+- O botão de nova guia abre o projeto independente do app.
+- Sem URL configurada, a página mostra uma orientação de conexão.
 
 ## Executar localmente
 
 Requer Node.js 20.
 
-1. Copie `.env.example` para `.env.local`.
-2. Preencha a URL do app:
-
-```text
-VITE_GAME_URL=https://nome-do-app.netlify.app
-```
-
-3. Execute:
-
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Acesse o endereço indicado pelo Vite, normalmente `http://localhost:5173`.
+Para carregar o app localmente, copie `.env.example` para `.env.local` e informe `VITE_GAME_URL`.
 
-## Deploy da landing no Netlify
-
-As configurações estão registradas em `netlify.toml`:
+## Deploy no Netlify
 
 ```text
 Diretório base: vazio
@@ -113,25 +73,13 @@ Diretório de funções: vazio
 Node: 20
 ```
 
+As configurações já estão registradas em `netlify.toml`.
+
 ## Formulário de leads
 
-A página continua preparada para **Netlify Forms**, sem backend adicional.
+- Nome: `detailer-leads`
+- Processamento: Netlify Forms
+- Sem backend adicional
+- Envios disponíveis no painel do Netlify em **Forms**
 
-- Nome do formulário: `detailer-leads`
-- Os envios aparecem no painel do projeto em **Forms**.
-- Notificações por e-mail podem ser ativadas em **Project configuration → Notifications**.
-
-## Estrutura principal
-
-```text
-src/
-  App.tsx              Conteúdo, componentes e integração do iframe
-  styles.css           Identidade visual, responsividade e overlay mobile
-  runtime-config.d.ts  Tipagem da configuração pública
-  assets/              Capturas reais do produto
-public/
-  app-config.js        Configuração alternativa da URL do app
-  _redirects           Fallback da landing no Netlify
-.env.example           Exemplo da variável VITE_GAME_URL
-netlify.toml           Build e publicação no Netlify
-```
+O formulário estático de detecção permanece no `index.html`.

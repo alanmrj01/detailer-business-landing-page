@@ -1,0 +1,50 @@
+DETAILER BUSINESS — LANDING PAGE 2.3
+====================================
+
+Objetivo desta versão
+---------------------
+Reduzir repetições, aproximar a demonstração do início, explicitar o benefício
+comercial e encurtar o caminho entre entendimento e contato, preservando todas
+as integrações e comportamentos já validados.
+
+Alterações de conversão e conteúdo
+----------------------------------
+- Primeira dobra reescrita para explicar imediatamente o que é o produto,
+  para quem serve e como gera aprendizado.
+- Demonstração movida para logo após a primeira dobra.
+- Benefício comercial apresentado de forma direta: mais clareza do método,
+  participação dos alunos e valor percebido da oferta.
+- Removida a abordagem que poderia sugerir que o conteúdo do criador é genérico.
+  A nova mensagem reconhece o valor do conteúdo e apresenta a prática como
+  complemento pedagógico.
+- Textos ambíguos sobre preço substituídos por uma explicação objetiva:
+  escopo, entregas, prazo e investimento são apresentados antes do início.
+- Formulário aproximado da explicação de investimento.
+- Página encurtada e seções redundantes consolidadas.
+
+Referências de mercado
+----------------------
+- Inclusão de três ilustrações vetoriais próprias para exemplificar os
+  mecanismos de aprendizagem associados a Duolingo, Codecademy e Kahoot!.
+- Links oficiais preservados.
+- Aviso explícito de que essas marcas não são clientes, parceiros ou cases do
+  Detailer Business.
+
+Preservado sem alteração funcional
+----------------------------------
+- VITE_GAME_URL e configuração alternativa por public/app-config.js.
+- App independente dentro do iframe.
+- Abertura da demonstração em tela cheia no celular.
+- Formulário Netlify detailer-leads.
+- Campos e nomes do formulário.
+- Deploy por Netlify e compatibilidade com StackBlitz.
+- Tema visual azul/navy e identidade Detailer Business.
+- Acessibilidade básica e preferência por redução de movimento.
+
+Validações
+----------
+- npm ci aprovado.
+- TypeScript aprovado.
+- Build Vite de produção aprovado.
+- Formulário estático do Netlify preservado no index.html.
+- Registro público do npm confirmado no package-lock.json.

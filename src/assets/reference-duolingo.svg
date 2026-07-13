@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustração de aprendizagem em pequenas missões</title>
+  <desc id="desc">Uma trilha verde com cartões de idioma, progresso e sequência de prática.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#10253c"/><stop offset="1" stop-color="#07101d"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7ee44d"/><stop offset="1" stop-color="#32bd55"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="640" height="420" rx="36" fill="url(#bg)"/>
+  <circle cx="505" cy="70" r="120" fill="#55c94a" opacity=".08" filter="url(#glow)"/>
+  <path d="M90 327C178 260 155 173 250 155c101-19 139 81 245 16" fill="none" stroke="#29445b" stroke-width="24" stroke-linecap="round"/>
+  <path d="M90 327C178 260 155 173 250 155c69-13 108 30 158 36" fill="none" stroke="url(#green)" stroke-width="14" stroke-linecap="round"/>
+  <g fill="#0b1929" stroke="#7ee44d" stroke-width="5">
+    <circle cx="93" cy="327" r="34"/><circle cx="205" cy="213" r="34"/><circle cx="333" cy="174" r="34"/><circle cx="462" cy="190" r="34"/>
+  </g>
+  <g fill="#b8f5a2" font-family="Arial, sans-serif" font-weight="700" text-anchor="middle">
+    <text x="93" y="336" font-size="27">1</text><text x="205" y="222" font-size="27">2</text><text x="333" y="183" font-size="27">3</text><text x="462" y="199" font-size="27">4</text>
+  </g>
+  <rect x="62" y="58" width="236" height="82" rx="20" fill="#12293f" stroke="#31506a"/>
+  <rect x="83" y="80" width="42" height="42" rx="12" fill="url(#green)"/>
+  <path d="M96 101h16m-8-8v16" stroke="#082217" stroke-width="5" stroke-linecap="round"/>
+  <text x="143" y="91" fill="#8fa8bd" font-family="Arial" font-size="16">Missão diária</text>
+  <text x="143" y="118" fill="#f2f8ff" font-family="Arial" font-size="22" font-weight="700">Prática em sequência</text>
+  <rect x="402" y="274" width="176" height="88" rx="22" fill="#10243a" stroke="#31506a"/>
+  <path d="M434 329l18-31 18 31 18-31 18 31" fill="none" stroke="#ffad38" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="523" y="309" fill="#9fb1c5" font-family="Arial" font-size="15">Feedback</text>
+  <text x="523" y="337" fill="#f6fbff" font-family="Arial" font-size="23" font-weight="700">imediato</text>
+</svg>
