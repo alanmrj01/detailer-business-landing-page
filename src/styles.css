@@ -1938,3 +1938,58 @@ textarea:focus-visible {
     transform: none;
   }
 }
+
+/* 2.6 — integração de copy aprovada sem alterar a composição visual 2.3. */
+html,
+body,
+.site-shell {
+  overflow-x: hidden;
+}
+
+.demo-desktop-frame,
+.mobile-demo-overlay {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.demo-desktop-frame iframe,
+.mobile-demo-overlay iframe {
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.demo-desktop-frame iframe::-webkit-scrollbar,
+.mobile-demo-overlay iframe::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.mobile-demo-overlay__close {
+  top: max(6px, env(safe-area-inset-top));
+  right: max(6px, env(safe-area-inset-right));
+}
+
+.footer-copy {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.footer-copy p {
+  margin: 0;
+}
+
+.footer-copy small {
+  color: #52667f;
+  font-size: 8.5px;
+  line-height: 1.4;
+}
+
+@media (max-width: 680px) {
+  .footer-copy {
+    max-width: 300px;
+  }
+}

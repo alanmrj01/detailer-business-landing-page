@@ -5,10 +5,21 @@ import resultImage from './assets/resultado.webp';
 import settingsImage from './assets/configuracoes.webp';
 import mobileImage from './assets/celular-decisao.webp';
 import duolingoImage from './assets/reference-duolingo.svg';
-import codecademyImage from './assets/reference-codecademy.svg';
+import electudeImage from './assets/reference-electude.svg';
 import kahootImage from './assets/reference-kahoot.svg';
 
-const normalizeExternalUrl = (value?: string) => value?.trim().replace(/\/+$/, '') ?? '';
+const normalizeExternalUrl = (value?: string) => {
+  const candidate = value?.trim().replace(/\/+$/, '') ?? '';
+  if (!candidate) return '';
+
+  try {
+    const parsed = new URL(candidate);
+    const localDevelopment = parsed.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(parsed.hostname);
+    return parsed.protocol === 'https:' || localDevelopment ? parsed.toString().replace(/\/+$/, '') : '';
+  } catch {
+    return '';
+  }
+};
 
 const configuredGameBaseUrl = normalizeExternalUrl(
   import.meta.env.VITE_GAME_URL || window.DETAILER_CONFIG?.gameUrl,
@@ -43,7 +54,7 @@ const navigation = [
   ['Demonstração', 'experiencia'],
   ['Benefícios', 'beneficios'],
   ['Exemplos', 'referencias'],
-  ['Investimento', 'investimento'],
+  ['Teste de 14 dias', 'investimento'],
   ['FAQ', 'faq'],
 ] as const;
 
@@ -68,8 +79,8 @@ const learningBenefits = [
 const valuePillars = [
   {
     icon: 'target' as IconName,
-    title: 'Feito para você',
-    text: 'Marca, linguagem, cenários e critérios conectados ao seu método.',
+    title: 'Implantação leve',
+    text: 'Você envia o conteúdo-base e nós organizamos a experiência para testar.',
   },
   {
     icon: 'brain' as IconName,
@@ -92,11 +103,11 @@ const marketReferences = [
     image: duolingoImage,
   },
   {
-    name: 'Codecademy',
-    label: 'Aprender fazendo',
-    text: 'O aluno executa tarefas, testa soluções e recebe retorno durante a prática.',
-    href: 'https://www.codecademy.com/',
-    image: codecademyImage,
+    name: 'Electude',
+    label: 'Simulação automotiva',
+    text: 'O aluno pratica diagnóstico e tomada de decisão em situações técnicas antes da oficina real.',
+    href: 'https://www.electude.com/learning-solutions/light-vehicles/',
+    image: electudeImage,
   },
   {
     name: 'Kahoot!',
@@ -108,37 +119,42 @@ const marketReferences = [
 ];
 
 const implementationSteps = [
-  ['01', 'Entendemos seu método', 'Mapeamos sua oferta, sua audiência e o que o aluno precisa aprender.'],
-  ['02', 'Desenhamos as decisões', 'Transformamos conteúdo em situações, escolhas, impactos e diagnóstico.'],
-  ['03', 'Personalizamos o app', 'Aplicamos sua marca, linguagem, preços, critérios e identidade visual.'],
-  ['04', 'Entregamos pronto para usar', 'Você valida a experiência e recebe o app para curso, mentoria ou comunidade.'],
+  ['01', 'Envie o essencial', 'Um formulário curto e o material principal do seu método já são suficientes para começar.'],
+  ['02', 'Receba a primeira versão', 'Organizamos as situações, decisões, consequências e a identidade da experiência.'],
+  ['03', 'Teste por 14 dias', 'Use com alunos ou seguidores e veja como o público reage na prática.'],
+  ['04', 'Escolha se quer continuar', 'Se fizer sentido, você recebe opções prontas de continuidade, com entregas e valor definidos.'],
 ] as const;
 
 const faqs = [
   {
-    question: 'É apenas um jogo com a minha logo?',
+    question: 'O que recebo para testar por 14 dias?',
     answer:
-      'Não. A identidade visual é apenas uma parte. O trabalho principal é transformar seu método em situações, decisões, consequências e diagnóstico para que o aluno pratique o que você ensina.',
+      'Você recebe uma versão piloto com sua identidade e um recorte do seu método transformado em decisões, consequências e diagnóstico. Ela já fica pronta para usar com alunos ou seguidores durante o teste.',
   },
   {
-    question: 'Quanto custa?',
+    question: 'O que preciso enviar para começar?',
     answer:
-      'O investimento é definido depois de entendermos o tamanho do projeto. Você recebe o escopo, as entregas e o valor antes de qualquer desenvolvimento. Também é possível começar por uma versão essencial e evoluir depois.',
+      'Somente um formulário curto e o material principal que você já utiliza: aulas, apostilas, roteiro, planilha ou explicação do método. A equipe organiza esse conteúdo no formato do simulador.',
   },
   {
-    question: 'Preciso mudar meu curso?',
+    question: 'Preciso participar de reuniões ou cuidar da parte técnica?',
     answer:
-      'Não. O simulador pode entrar como atividade prática, bônus, fechamento de módulo, dinâmica de mentoria, ferramenta de captação ou conteúdo para a comunidade.',
+      'Não. O processo foi pensado para ser leve. As confirmações podem ser feitas pelo WhatsApp, e toda a parte de estrutura, desenvolvimento, publicação e funcionamento fica com a nossa equipe.',
   },
   {
-    question: 'Preciso saber programar?',
+    question: 'Como funciona se eu quiser continuar depois do teste?',
     answer:
-      'Não. A implantação é feita com você. O painel permite editar os conteúdos previstos no projeto sem precisar alterar código.',
+      'Você recebe opções objetivas para manter ou ampliar o simulador, cada uma com entregas e valor definidos. Você escolhe a que combina com a sua oferta, sem renovação automática e sem etapas escondidas.',
   },
   {
-    question: 'Onde o aluno acessa?',
+    question: 'Existe cobrança por aluno ou participação nas vendas?',
     answer:
-      'Diretamente pelo navegador, no computador ou celular. A forma de disponibilização é definida junto com você durante a implantação.',
+      'Não. O modelo é baseado na criação e manutenção da ferramenta. O número de alunos e as vendas do seu curso continuam sendo inteiramente seus.',
+  },
+  {
+    question: 'Como o simulador entra no meu curso?',
+    answer:
+      'Ele pode ser usado por link, incorporado à área de membros ou apresentado em aulas, mentorias e comunidades. O aluno acessa pelo navegador no computador ou celular, sem instalar nada.',
   },
 ];
 
@@ -211,9 +227,30 @@ function SectionHeading({
   );
 }
 
+
+function FaqList() {
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  return (
+    <div className="faq-list" data-reveal>
+      {faqs.map((faq, index) => {
+        const open = activeFaq === index;
+        return (
+          <article className={open ? 'faq-item faq-item--open' : 'faq-item'} key={faq.question}>
+            <button type="button" onClick={() => setActiveFaq(open ? null : index)} aria-expanded={open}>
+              <span>{faq.question}</span>
+              <Icon name="chevron" size={19} />
+            </button>
+            {open ? <div className="faq-answer"><p>{faq.answer}</p></div> : null}
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
 export function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeFaq, setActiveFaq] = useState<number | null>(1);
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [mobileDemoOpen, setMobileDemoOpen] = useState(false);
   const [showMobileCta, setShowMobileCta] = useState(false);
@@ -225,7 +262,7 @@ export function App() {
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
 
-    if (!('IntersectionObserver' in window)) {
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       elements.forEach((element) => element.classList.add('is-visible'));
       return undefined;
     }
@@ -239,7 +276,7 @@ export function App() {
           }
         });
       },
-      { threshold: 0.1 },
+      { threshold: 0.08, rootMargin: '0px 0px 80px 0px' },
     );
 
     elements.forEach((element) => observer.observe(element));
@@ -261,21 +298,36 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    const syncCta = () => setShowMobileCta(window.scrollY > Math.min(window.innerHeight * 0.9, 760));
+    let frame = 0;
+
+    const syncCta = () => {
+      frame = 0;
+      const nextValue = window.scrollY > Math.min(window.innerHeight * 0.9, 760);
+      setShowMobileCta((current) => (current === nextValue ? current : nextValue));
+    };
+
+    const scheduleSync = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(syncCta);
+    };
+
     syncCta();
-    window.addEventListener('scroll', syncCta, { passive: true });
-    window.addEventListener('resize', syncCta);
+    window.addEventListener('scroll', scheduleSync, { passive: true });
+    window.addEventListener('resize', scheduleSync, { passive: true });
     return () => {
-      window.removeEventListener('scroll', syncCta);
-      window.removeEventListener('resize', syncCta);
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', scheduleSync);
+      window.removeEventListener('resize', scheduleSync);
     };
   }, []);
 
   useEffect(() => {
     if (!mobileDemoOpen) return undefined;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setMobileDemoOpen(false);
@@ -283,7 +335,8 @@ export function App() {
 
     window.addEventListener('keydown', closeOnEscape);
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
       window.removeEventListener('keydown', closeOnEscape);
     };
   }, [mobileDemoOpen]);
@@ -342,7 +395,7 @@ export function App() {
           </nav>
           <div className="header-actions">
             <button className="button button--small" type="button" onClick={() => scrollTo('contato')}>
-              Falar com especialista
+              Testar por 14 dias
             </button>
           </div>
           <button
@@ -363,9 +416,9 @@ export function App() {
           <div className="container hero-grid">
             <div className="hero-copy" data-reveal>
               <span className="hero-kicker">Simulador didático para criadores</span>
-              <h1>Transforme seu método em uma experiência que ensina o aluno a <em>decidir no mundo real.</em></h1>
+              <h1>Transforme seu método em uma experiência que prepara o aluno para <em>decidir no mundo real.</em></h1>
               <p>
-                Criamos um app personalizado que coloca seus alunos diante de situações reais, mostra as consequências de cada escolha e entrega um diagnóstico baseado no que você ensina.
+                Você envia o conteúdo-base. Nós transformamos em decisões, consequências e diagnóstico — pronto para testar com seu público em poucos passos.
               </p>
 
               <div className="hero-mechanism" aria-label="Como funciona">
@@ -382,15 +435,15 @@ export function App() {
                   Ver o simulador na prática <Icon name="play" size={18} />
                 </button>
                 <button className="button button--outline" type="button" onClick={() => scrollTo('contato')}>
-                  Quero conversar
+                  Testar por 14 dias
                 </button>
               </div>
-              <p className="hero-reassurance"><Icon name="shield" size={15} /> Conversa inicial sem compromisso. Escopo e investimento definidos antes de começar.</p>
+              <p className="hero-reassurance"><Icon name="shield" size={15} /> Teste com seu público antes de investir. Sem cobrança por aluno e sem participação nas vendas.</p>
             </div>
 
             <div className="hero-product" data-reveal>
               <div className="hero-device">
-                <img src={mobileImage} alt="Simulador Detailer Business em um celular" />
+                <img src={mobileImage} alt="Simulador Detailer Business em um celular" width="390" height="2540" fetchPriority="high" decoding="async" />
               </div>
               <div className="hero-product-card hero-product-card--top">
                 <span><Icon name="method" size={19} /></span>
@@ -417,7 +470,7 @@ export function App() {
           <div className="container">
             <div className="experience-heading">
               <SectionHeading
-                eyebrow="Veja antes de conversar"
+                eyebrow="Veja como funciona"
                 title="Experimente o simulador."
                 text="Uma amostra real da experiência que seus alunos podem ter."
               />
@@ -436,7 +489,7 @@ export function App() {
                   <small>Demonstração atualizada pelo app independente</small>
                 </div>
                 <div className="demo-actions">
-                  {gameDirectUrl ? <a href={gameDirectUrl} target="_blank" rel="noreferrer">Abrir em nova guia</a> : null}
+                  {gameDirectUrl ? <a href={gameDirectUrl} target="_blank" rel="noopener noreferrer">Abrir em nova guia</a> : null}
                   <button type="button" onClick={enterFullscreen} disabled={!gameEmbedUrl}>
                     <Icon name="fullscreen" size={18} /> Tela cheia
                   </button>
@@ -446,7 +499,7 @@ export function App() {
               {gameEmbedUrl ? (
                 isMobileViewport ? (
                   <div className="demo-mobile-preview">
-                    <img src={coverImage} alt="Prévia da demonstração do Detailer Business" />
+                    <img src={coverImage} alt="Prévia da demonstração do Detailer Business" width="1365" height="1070" loading="lazy" decoding="async" />
                     <div className="demo-mobile-preview__content">
                       <span><Icon name="play" size={18} /> Demonstração interativa</span>
                       <h3>Jogue em tela cheia.</h3>
@@ -462,6 +515,7 @@ export function App() {
                       src={gameEmbedUrl}
                       title="Demonstração interativa do Detailer Business"
                       loading="lazy"
+                      scrolling="no"
                       allow="fullscreen; clipboard-write"
                       allowFullScreen
                       referrerPolicy="strict-origin-when-cross-origin"
@@ -493,14 +547,14 @@ export function App() {
                 <div><span><Icon name="check" size={17} /></span><p><strong>Mais valor percebido</strong>Sua oferta passa a ter uma ferramenta própria e demonstrável.</p></div>
               </div>
               <button className="text-link" type="button" onClick={() => scrollTo('contato')}>
-                Quero aplicar isso ao meu método <Icon name="arrow" size={17} />
+                Quero testar com o meu método <Icon name="arrow" size={17} />
               </button>
             </div>
 
             <div className="learning-preview" data-reveal>
-              <img src={decisionImage} alt="Tela de decisão do Detailer Business" />
+              <img src={decisionImage} alt="Tela de decisão do Detailer Business" width="1365" height="1141" loading="lazy" decoding="async" />
               <div className="learning-preview__result">
-                <img src={resultImage} alt="Tela de diagnóstico final do Detailer Business" />
+                <img src={resultImage} alt="Tela de diagnóstico final do Detailer Business" width="1365" height="1390" loading="lazy" decoding="async" />
               </div>
               <div className="learning-preview__caption"><Icon name="sparkles" size={18} /> Decisão, consequência e diagnóstico na mesma jornada.</div>
             </div>
@@ -518,12 +572,12 @@ export function App() {
             <div className="reference-grid">
               {marketReferences.map((reference) => (
                 <article className="reference-card" key={reference.name} data-reveal>
-                  <img src={reference.image} alt={`Ilustração inspirada no mecanismo de aprendizagem do ${reference.name}`} />
+                  <img src={reference.image} alt={`Ilustração inspirada no mecanismo de aprendizagem do ${reference.name}`} width="640" height="420" loading="lazy" decoding="async" />
                   <div className="reference-card__body">
                     <small>{reference.label}</small>
                     <h3>{reference.name}</h3>
                     <p>{reference.text}</p>
-                    <a href={reference.href} target="_blank" rel="noreferrer">
+                    <a href={reference.href} target="_blank" rel="noopener noreferrer">
                       Ver referência oficial <Icon name="arrow" size={15} />
                     </a>
                   </div>
@@ -539,8 +593,8 @@ export function App() {
             <div className="implementation-copy" data-reveal>
               <SectionHeading
                 eyebrow="Do seu conteúdo ao simulador"
-                title="Um processo simples, com você no controle."
-                text="Nós transformamos sua metodologia em produto sem exigir que você saiba programar ou reconstrua seu curso."
+                title="Do conteúdo ao teste, sem complicação."
+                text="Você envia o essencial, acompanha a primeira versão e testa com seu público antes de decidir pela continuidade."
               />
               <div className="step-list">
                 {implementationSteps.map(([number, title, text]) => (
@@ -553,7 +607,7 @@ export function App() {
             </div>
 
             <div className="customization-visual" data-reveal>
-              <div className="settings-frame"><img src={settingsImage} alt="Painel de personalização do Detailer Business" /></div>
+              <div className="settings-frame"><img src={settingsImage} alt="Painel de personalização do Detailer Business" width="1365" height="994" loading="lazy" decoding="async" /></div>
               <div className="customization-card">
                 <span><Icon name="brand" size={22} /></span>
                 <div><strong>Sua marca, linguagem e critérios</strong><p>O aluno reconhece sua metodologia dentro da experiência.</p></div>
@@ -565,19 +619,19 @@ export function App() {
         <section className="section investment" id="investimento">
           <div className="container investment-contact-grid">
             <div className="investment-copy" data-reveal>
-              <span className="eyebrow">Investimento claro desde o início</span>
-              <h2>O valor é combinado com você antes de qualquer desenvolvimento.</h2>
+              <span className="eyebrow">Teste antes de investir</span>
+              <h2>Use por 14 dias com seu público. Só depois decida se quer continuar.</h2>
               <p>
-                Primeiro entendemos o seu objetivo. Depois apresentamos uma proposta com escopo, entregas, prazo e investimento. Você decide sabendo exatamente o que será criado.
+                Começamos com uma versão piloto do seu simulador. Você apresenta aos alunos ou seguidores, observa a resposta e decide com base no uso real — sem entrar em um projeto longo antes de validar.
               </p>
               <div className="investment-points">
-                <div><span><Icon name="check" size={16} /></span><p><strong>Conversa inicial sem compromisso</strong> para avaliar se o projeto faz sentido.</p></div>
-                <div><span><Icon name="check" size={16} /></span><p><strong>Proposta antes de começar</strong> com tudo o que está incluído.</p></div>
-                <div><span><Icon name="check" size={16} /></span><p><strong>Possibilidade de começar menor</strong> e evoluir depois da validação.</p></div>
+                <div><span><Icon name="check" size={16} /></span><p><strong>Entrada simples</strong> com um formulário curto e o conteúdo principal do seu método.</p></div>
+                <div><span><Icon name="check" size={16} /></span><p><strong>Piloto de 14 dias</strong> para experimentar com seu público antes de investir.</p></div>
+                <div><span><Icon name="check" size={16} /></span><p><strong>Continuidade simples</strong> com opções prontas, entregas claras e valor definido depois do teste.</p></div>
               </div>
               <div className="investment-note">
                 <Icon name="money" size={21} />
-                <p><strong>Não existe preço escondido nem obrigação de contratar.</strong> O investimento acompanha o tamanho real do projeto.</p>
+                <p><strong>Sem cobrança por aluno e sem participação nas suas vendas.</strong> Você continua somente se o simulador fizer sentido para a sua oferta.</p>
               </div>
             </div>
 
@@ -585,23 +639,23 @@ export function App() {
               <input type="hidden" name="form-name" value="detailer-leads" />
               <p className="hidden-field"><label>Não preencha: <input name="bot-field" /></label></p>
               <div className="form-heading">
-                <span className="eyebrow">Vamos conversar?</span>
-                <h3>Conte sobre o seu projeto.</h3>
-                <p>Receba uma avaliação inicial e entenda qual formato pode fazer sentido para você.</p>
+                <span className="eyebrow">Comece pelo piloto</span>
+                <h3>Teste por 14 dias com seu público.</h3>
+                <p>Leva menos de um minuto. Envie os dados básicos e receba o próximo passo pelo WhatsApp.</p>
               </div>
               <div className="form-row">
                 <label>
                   Seu nome
-                  <input name="name" type="text" autoComplete="name" placeholder="Como podemos te chamar?" required />
+                  <input name="name" type="text" autoComplete="name" placeholder="Como podemos te chamar?" maxLength={80} required />
                 </label>
                 <label>
                   WhatsApp
-                  <input name="whatsapp" type="tel" autoComplete="tel" placeholder="(00) 00000-0000" required />
+                  <input name="whatsapp" type="tel" autoComplete="tel" inputMode="tel" placeholder="(00) 00000-0000" maxLength={24} required />
                 </label>
               </div>
               <label>
                 Perfil ou canal
-                <input name="profile" type="text" placeholder="@seuperfil ou link" required />
+                <input name="profile" type="text" autoComplete="url" placeholder="@seuperfil ou link" maxLength={160} required />
               </label>
               <label>
                 Em que fase você está?
@@ -615,15 +669,15 @@ export function App() {
               </label>
               <label>
                 O que você ensina? <span className="optional-label">Opcional</span>
-                <textarea name="method" rows={3} placeholder="Conte em uma frase qual é o seu método ou principal produto." />
+                <textarea name="method" rows={3} maxLength={500} placeholder="Ex.: ensino precificação e gestão para detailers." />
               </label>
               <button className="button button--form" type="submit" disabled={formState === 'sending'}>
-                {formState === 'sending' ? 'Enviando...' : 'Quero entender meu projeto'}
+                {formState === 'sending' ? 'Enviando...' : 'Quero testar por 14 dias'}
                 {formState !== 'sending' ? <Icon name="arrow" size={18} /> : null}
               </button>
-              {formState === 'success' ? <p className="form-message form-message--success">Recebemos seus dados. Vamos avaliar seu caso e entrar em contato.</p> : null}
-              {formState === 'error' ? <p className="form-message form-message--error">Não foi possível enviar agora. Tente novamente em instantes.</p> : null}
-              <small>Sem compromisso. Seus dados serão usados apenas para responder a esta solicitação.</small>
+              {formState === 'success' ? <p className="form-message form-message--success" role="status" aria-live="polite">Recebemos seus dados. Vamos confirmar o próximo passo pelo WhatsApp.</p> : null}
+              {formState === 'error' ? <p className="form-message form-message--error" role="alert">Não foi possível enviar agora. Tente novamente em instantes.</p> : null}
+              <small>Sem renovação automática. Seus dados serão usados apenas para organizar o piloto.</small>
             </form>
           </div>
         </section>
@@ -633,24 +687,11 @@ export function App() {
             <div data-reveal>
               <SectionHeading
                 eyebrow="Perguntas frequentes"
-                title="O essencial antes de conversar."
-                text="Respostas diretas para você avaliar se a solução combina com a sua oferta."
+                title="Dúvidas rápidas antes de testar."
+                text="Tudo o que você precisa saber para começar sem complicação."
               />
             </div>
-            <div className="faq-list" data-reveal>
-              {faqs.map((faq, index) => {
-                const open = activeFaq === index;
-                return (
-                  <article className={open ? 'faq-item faq-item--open' : 'faq-item'} key={faq.question}>
-                    <button type="button" onClick={() => setActiveFaq(open ? null : index)} aria-expanded={open}>
-                      <span>{faq.question}</span>
-                      <Icon name="chevron" size={19} />
-                    </button>
-                    <div className="faq-answer"><p>{faq.answer}</p></div>
-                  </article>
-                );
-              })}
-            </div>
+            <FaqList />
           </div>
         </section>
       </main>
@@ -658,11 +699,12 @@ export function App() {
       {mobileDemoOpen && gameEmbedUrl ? (
         <div className="mobile-demo-overlay" role="dialog" aria-modal="true" aria-label="Demonstração do Detailer Business">
           <button className="mobile-demo-overlay__close" type="button" onClick={() => setMobileDemoOpen(false)} aria-label="Fechar demonstração">
-            <span aria-hidden="true">×</span> Fechar
+            <span aria-hidden="true">×</span><span className="mobile-demo-overlay__close-label">Fechar</span>
           </button>
           <iframe
             src={gameEmbedUrl}
             title="Demonstração interativa do Detailer Business em tela cheia"
+            scrolling="no"
             allow="fullscreen; clipboard-write"
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"
@@ -673,7 +715,7 @@ export function App() {
       <footer className="footer">
         <div className="container footer-grid">
           <Brand />
-          <p>Seu conhecimento transformado em uma experiência que ensina, envolve e gera valor.</p>
+          <div className="footer-copy"><p>Seu conhecimento transformado em uma experiência que ensina, envolve e gera valor.</p><small>© 2026 Detailer Business. Todos os direitos reservados.</small></div>
           <button type="button" onClick={() => scrollTo('inicio')}>Voltar ao topo <Icon name="chevron" size={15} /></button>
         </div>
       </footer>
@@ -683,7 +725,7 @@ export function App() {
         type="button"
         onClick={() => scrollTo('contato')}
       >
-        Falar sobre meu projeto <Icon name="arrow" size={17} />
+        Testar por 14 dias <Icon name="arrow" size={17} />
       </button>
     </div>
   );

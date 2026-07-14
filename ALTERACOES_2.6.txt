@@ -1,0 +1,23 @@
+DETAILER BUSINESS LANDING PAGE 2.6
+
+Base visual:
+- Estrutura, proporções, espaçamentos, imagens, ilustrações e ritmo visual restaurados da versão 2.3.
+
+Copy e conversão incorporadas da versão 2.5:
+- Piloto de 14 dias antes de investir.
+- Linguagem de implantação simples e rápida.
+- CTAs objetivos.
+- FAQ mais próximo e prático.
+- Electude no lugar da Codecademy.
+- Sem cobrança por aluno e sem participação nas vendas.
+
+Ajustes técnicos preservados sem impacto visual:
+- Validação segura da URL externa do app.
+- Cabeçalhos de segurança para Netlify.
+- Iframe sem barras de rolagem.
+- Bloqueio de rolagem durante a demonstração mobile.
+- Otimização do listener do CTA mobile.
+- Carregamento tardio das imagens abaixo da dobra.
+- Direitos reservados no rodapé.
+
+Todas as imagens WEBP originais da versão 2.3 foram mantidas sem recompressão ou alteração.
