@@ -762,17 +762,12 @@ textarea:focus-visible {
   height: 100%;
   border: 0;
   display: block;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  touch-action: pan-y;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: contain;
   background: #050c16;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.demo-desktop-frame iframe::-webkit-scrollbar,
-.mobile-demo-overlay iframe::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  display: none;
 }
 
 .demo-shell:fullscreen .demo-desktop-frame {

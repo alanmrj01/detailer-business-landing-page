@@ -554,7 +554,7 @@ export function App() {
                       src={gameEmbedUrl}
                       title="Demonstração interativa do Detailer Business"
                       loading="lazy"
-                      scrolling="no"
+                      scrolling="auto"
                       allow="fullscreen; clipboard-write"
                       allowFullScreen
                       referrerPolicy="strict-origin-when-cross-origin"
@@ -770,7 +770,7 @@ export function App() {
           <iframe
             src={gameEmbedUrl}
             title="Demonstração interativa do Detailer Business em tela cheia"
-            scrolling="no"
+            scrolling="auto"
             allow="fullscreen; clipboard-write"
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"
