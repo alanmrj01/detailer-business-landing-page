@@ -1,20 +1,19 @@
-# Detailer Business — Landing Page comercial 2.4
+# Detailer Business — Landing Page comercial 2.3
 
 Landing page em React + Vite + TypeScript para apresentar o Detailer Business a criadores de conteúdo da estética automotiva.
 
-## O que mudou na versão 2.4
+## O que mudou na versão 2.3
 
-- Codecademy substituída por Electude, aproximando as referências do setor automotivo.
-- Oferta reorganizada em torno de um piloto de 14 dias antes do investimento.
-- CTAs e FAQ com linguagem mais simples, próxima e orientada à ação.
-- Processo de implantação apresentado como rápido e guiado.
-- FAQ otimizado sem animação de altura e isolado do restante da página.
-- Lazy loading, dimensões explícitas de imagens e renderização progressiva de seções.
-- Hero mais compacto, preservando a ilustração do aplicativo no celular.
-- Cabeçalhos de segurança para Netlify e validação da URL externa do app.
-- Direitos reservados adicionados ao rodapé.
+- Comunicação mais direta na primeira dobra.
+- Demonstração posicionada logo no início da página.
+- Menos seções e menos repetição de argumentos.
+- Benefício comercial explícito sem desvalorizar o conteúdo do criador.
+- Explicação clara de como escopo e investimento são definidos.
+- Formulário mais próximo da decisão de contato.
+- Ilustrações próprias para os exemplos de Duolingo, Codecademy e Kahoot!.
+- Aviso explícito de que as plataformas citadas são referências públicas, não clientes ou parceiros.
 
-O histórico detalhado está em `ALTERACOES_2.4.txt`.
+O histórico detalhado está em `ALTERACOES_2.3.txt`.
 
 ## Arquitetura
 
@@ -52,13 +51,6 @@ A variável `VITE_GAME_URL` tem prioridade.
 - O visitante retorna ao mesmo ponto da landing ao fechar.
 - O botão de nova guia abre o projeto independente do app.
 - Sem URL configurada, a página mostra uma orientação de conexão.
-
-## Segurança e desempenho
-
-- O arquivo `public/_headers` configura CSP, HSTS, proteção contra MIME sniffing, restrições de permissões e proteção contra enquadramento da landing.
-- A URL do app aceita apenas HTTPS; HTTP é permitido somente para `localhost` no desenvolvimento.
-- Assets versionados recebem cache longo, enquanto `app-config.js` permanece sem cache para permitir atualização segura da configuração.
-- O formulário mantém o honeypot do Netlify e limites de tamanho nos campos.
 
 ## Executar localmente
 
