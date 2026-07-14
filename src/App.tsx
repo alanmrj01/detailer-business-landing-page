@@ -29,6 +29,9 @@ const gameDirectUrl = configuredGameBaseUrl ? `${configuredGameBaseUrl}/` : '';
 const gameEmbedUrl = configuredGameBaseUrl
   ? `${configuredGameBaseUrl}/?embed=1&source=landing`
   : '';
+const configuredGameOrigin = configuredGameBaseUrl
+  ? new URL(configuredGameBaseUrl).origin
+  : '';
 
 type IconName =
   | 'arrow'
@@ -348,6 +351,36 @@ export function App() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setMenuOpen(false);
   };
+
+  useEffect(() => {
+    const handleGameMessage = async (event: MessageEvent<unknown>) => {
+      if (!configuredGameOrigin || event.origin !== configuredGameOrigin) return;
+      if (!event.data || typeof event.data !== 'object') return;
+
+      const message = event.data as { type?: string; source?: string };
+      if (message.type !== 'detailer-business:trial-request' || message.source !== 'demo-limit') return;
+
+      if (document.fullscreenElement && typeof document.exitFullscreen === 'function') {
+        try {
+          await document.exitFullscreen();
+        } catch {
+          // O redirecionamento ao formulário continua mesmo se o navegador negar a saída.
+        }
+      }
+
+      setMobileDemoOpen(false);
+      setMenuOpen(false);
+
+      window.setTimeout(() => {
+        const form = document.getElementById('contato');
+        form?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      }, 180);
+    };
+
+    window.addEventListener('message', handleGameMessage);
+    return () => window.removeEventListener('message', handleGameMessage);
+  }, []);
 
   const enterFullscreen = async () => {
     if (!gameEmbedUrl) return;
