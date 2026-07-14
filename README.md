@@ -91,7 +91,3 @@ As configurações já estão registradas em `netlify.toml`.
 - Envios disponíveis no painel do Netlify em **Forms**
 
 O formulário estático de detecção permanece no `index.html`.
-
-## Atualização 2.5
-
-A versão 2.5 preserva todos os assets visuais da 2.4 e aplica somente ajustes de copy, desempenho, segurança, posicionamento do hero, FAQ e iframe. Consulte `ALTERACOES_2.5.txt`.

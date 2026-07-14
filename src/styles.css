@@ -37,7 +37,6 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  overflow-x: hidden;
   background:
     radial-gradient(circle at 80% -10%, rgba(32, 155, 221, 0.14), transparent 32%),
     radial-gradient(circle at 8% 22%, rgba(20, 77, 149, 0.12), transparent 30%),
@@ -90,8 +89,7 @@ textarea:focus-visible {
 
 .site-shell {
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-x: clip;
+  overflow: clip;
 }
 
 .container {
@@ -269,7 +267,7 @@ textarea:focus-visible {
 
 .hero {
   position: relative;
-  padding: 38px 0 18px;
+  padding: 78px 0 24px;
 }
 
 .hero::before {
@@ -289,13 +287,12 @@ textarea:focus-visible {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.75fr);
   gap: 76px;
-  align-items: start;
+  align-items: center;
 }
 
 .hero-copy {
   position: relative;
   z-index: 2;
-  padding-top: 20px;
 }
 
 .hero-kicker,
@@ -679,8 +676,6 @@ textarea:focus-visible {
 .demo-desktop-frame {
   height: min(72vh, 770px);
   min-height: 600px;
-  overflow: hidden;
-  overscroll-behavior: none;
 }
 
 .demo-desktop-frame iframe,
@@ -689,18 +684,7 @@ textarea:focus-visible {
   height: 100%;
   border: 0;
   display: block;
-  overflow: hidden;
-  overscroll-behavior: none;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   background: #050c16;
-}
-
-.demo-desktop-frame iframe::-webkit-scrollbar,
-.mobile-demo-overlay iframe::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  display: none;
 }
 
 .demo-shell:fullscreen .demo-desktop-frame {
@@ -1390,23 +1374,21 @@ textarea:focus-visible {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  overflow: hidden;
-  overscroll-behavior: none;
   background: #020710;
 }
 
 .mobile-demo-overlay__close {
-  position: absolute;
+  position: fixed;
   z-index: 10000;
-  top: max(4px, env(safe-area-inset-top));
-  right: max(4px, env(safe-area-inset-right));
-  min-height: 36px;
+  top: max(12px, env(safe-area-inset-top));
+  right: 12px;
+  min-height: 38px;
   border: 1px solid rgba(113, 191, 230, 0.4);
   border-radius: 999px;
   background: rgba(5, 17, 30, 0.9);
   backdrop-filter: blur(12px);
   color: #f0f7fd;
-  padding: 0 12px;
+  padding: 0 14px;
   font-size: 11px;
   font-weight: 800;
   display: inline-flex;
@@ -1424,8 +1406,14 @@ textarea:focus-visible {
 }
 
 [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 620ms ease, transform 620ms ease;
+}
+
+[data-reveal].is-visible {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
 }
 
 @media (max-width: 1080px) {
@@ -1579,7 +1567,7 @@ textarea:focus-visible {
   }
 
   .hero {
-    padding: 18px 0 14px;
+    padding: 46px 0 18px;
   }
 
   .hero-grid {
@@ -2120,107 +2108,5 @@ textarea:focus-visible {
   .hero-device {
     width: 202px;
     height: 372px;
-  }
-}
-
-
-/* 2.5 — ajustes cirúrgicos de posicionamento, desempenho e iframe */
-.hero-grid {
-  align-items: start;
-}
-
-.hero-copy {
-  align-self: start;
-}
-
-.demo-shell:fullscreen,
-.demo-shell:fullscreen .demo-desktop-frame {
-  overflow: hidden;
-  overscroll-behavior: none;
-}
-
-.mobile-demo-overlay__close {
-  transform: translateZ(0);
-  touch-action: manipulation;
-}
-
-/* A página não depende mais de animações de entrada para exibir conteúdo. */
-[data-reveal],
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-/* Mantém os blocos fora da primeira dobra baratos também no celular. */
-.benefit-section,
-.references,
-.implementation,
-.investment,
-.faq {
-  content-visibility: auto;
-}
-
-@media (max-width: 680px) {
-  .hero {
-    padding-top: 16px;
-  }
-
-  .hero-copy {
-    padding-top: 0;
-  }
-
-  .benefit-section,
-  .references,
-  .implementation,
-  .investment,
-  .faq {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 920px;
-  }
-
-  .mobile-demo-overlay__close {
-    top: max(3px, env(safe-area-inset-top));
-    right: max(3px, env(safe-area-inset-right));
-  }
-}
-
-@media (max-width: 360px) {
-  .mobile-demo-overlay__close {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
-  }
-
-  .mobile-demo-overlay__close-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-}
-
-/* Copy principal visível imediatamente após o cabeçalho, sem mover a ilustração. */
-.hero {
-  padding: 28px 0 14px;
-}
-
-.hero-copy {
-  padding-top: 12px;
-}
-
-@media (max-width: 680px) {
-  .hero {
-    padding-top: 14px;
-  }
-
-  .hero-copy {
-    padding-top: 0;
   }
 }

@@ -119,42 +119,42 @@ const marketReferences = [
 ];
 
 const implementationSteps = [
-  ['01', 'Envie o essencial', 'Um formulário curto e o material principal do seu método já são suficientes para começar.'],
-  ['02', 'Receba a primeira versão', 'Organizamos as situações, decisões, consequências e a identidade da experiência.'],
-  ['03', 'Teste por 14 dias', 'Use com alunos ou seguidores e veja como o público reage na prática.'],
-  ['04', 'Escolha se quer continuar', 'Se fizer sentido, você recebe opções prontas de continuidade, com entregas e valor definidos.'],
+  ['01', 'Envie o conteúdo-base', 'Um formulário curto e seus materiais já são suficientes para começarmos.'],
+  ['02', 'Receba a primeira versão', 'Organizamos situações, decisões, consequências e identidade visual.'],
+  ['03', 'Teste por 14 dias', 'Use a experiência com alunos ou seguidores e acompanhe a reação do público.'],
+  ['04', 'Continue somente se fizer sentido', 'Depois do piloto, você escolhe a versão ideal com escopo e valor claros.'],
 ] as const;
 
 const faqs = [
   {
-    question: 'O que recebo para testar por 14 dias?',
+    question: 'Como funciona o teste de 14 dias?',
     answer:
-      'Você recebe uma versão piloto com sua identidade e um recorte do seu método transformado em decisões, consequências e diagnóstico. Ela já fica pronta para usar com alunos ou seguidores durante o teste.',
+      'Criamos uma versão piloto com sua identidade e um recorte do seu método. Você usa com alunos ou seguidores por 14 dias e só decide pela continuidade depois de observar a experiência na prática.',
   },
   {
-    question: 'O que preciso enviar para começar?',
+    question: 'Preciso fazer várias reuniões para começar?',
     answer:
-      'Somente um formulário curto e o material principal que você já utiliza: aulas, apostilas, roteiro, planilha ou explicação do método. A equipe organiza esse conteúdo no formato do simulador.',
+      'Não. O início é simples: você preenche um formulário curto e envia o material principal do seu curso ou método. Os ajustes podem ser resolvidos de forma objetiva pelo WhatsApp.',
   },
   {
-    question: 'Preciso participar de reuniões ou cuidar da parte técnica?',
+    question: 'Quanto custa depois do teste?',
     answer:
-      'Não. O processo foi pensado para ser leve. As confirmações podem ser feitas pelo WhatsApp, e toda a parte de estrutura, desenvolvimento, publicação e funcionamento fica com a nossa equipe.',
+      'Ao final do piloto, você recebe opções claras de continuidade de acordo com a versão que deseja manter ou ampliar. O escopo e o valor são apresentados antes de qualquer cobrança, sem preço escondido.',
   },
   {
-    question: 'Como funciona se eu quiser continuar depois do teste?',
+    question: 'Vocês cobram por aluno ou ficam com parte das vendas?',
     answer:
-      'Você recebe opções objetivas para manter ou ampliar o simulador, cada uma com entregas e valor definidos. Você escolhe a que combina com a sua oferta, sem renovação automática e sem etapas escondidas.',
+      'Não. O modelo é baseado na criação e manutenção da ferramenta. Não cobramos por aluno e não participamos das vendas do seu curso.',
   },
   {
-    question: 'Existe cobrança por aluno ou participação nas vendas?',
+    question: 'Preciso mudar meu curso ou saber programar?',
     answer:
-      'Não. O modelo é baseado na criação e manutenção da ferramenta. O número de alunos e as vendas do seu curso continuam sendo inteiramente seus.',
+      'Não. O simulador entra como atividade, bônus, dinâmica de mentoria, ferramenta de avaliação ou conteúdo para comunidade. A parte técnica fica com a nossa equipe.',
   },
   {
-    question: 'Como o simulador entra no meu curso?',
+    question: 'Onde o aluno acessa?',
     answer:
-      'Ele pode ser usado por link, incorporado à área de membros ou apresentado em aulas, mentorias e comunidades. O aluno acessa pelo navegador no computador ou celular, sem instalar nada.',
+      'Diretamente pelo navegador, no computador ou celular. O app pode ser disponibilizado por link ou incorporado à área do seu curso, conforme a plataforma utilizada.',
   },
 ];
 
@@ -229,7 +229,7 @@ function SectionHeading({
 
 
 function FaqList() {
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
   return (
     <div className="faq-list" data-reveal>
@@ -260,6 +260,33 @@ export function App() {
   const demoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+    const avoidRevealAnimation =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.matchMedia('(max-width: 680px)').matches;
+
+    if (avoidRevealAnimation || !('IntersectionObserver' in window)) {
+      elements.forEach((element) => element.classList.add('is-visible'));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const media = window.matchMedia('(max-width: 760px)');
     const syncViewport = () => setIsMobileViewport(media.matches);
     syncViewport();
@@ -274,36 +301,21 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    let frame = 0;
-
-    const syncCta = () => {
-      frame = 0;
-      const nextValue = window.scrollY > Math.min(window.innerHeight * 0.9, 760);
-      setShowMobileCta((current) => (current === nextValue ? current : nextValue));
-    };
-
-    const scheduleSync = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(syncCta);
-    };
-
+    const syncCta = () => setShowMobileCta(window.scrollY > Math.min(window.innerHeight * 0.9, 760));
     syncCta();
-    window.addEventListener('scroll', scheduleSync, { passive: true });
-    window.addEventListener('resize', scheduleSync, { passive: true });
+    window.addEventListener('scroll', syncCta, { passive: true });
+    window.addEventListener('resize', syncCta);
     return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', scheduleSync);
-      window.removeEventListener('resize', scheduleSync);
+      window.removeEventListener('scroll', syncCta);
+      window.removeEventListener('resize', syncCta);
     };
   }, []);
 
   useEffect(() => {
     if (!mobileDemoOpen) return undefined;
 
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
 
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setMobileDemoOpen(false);
@@ -311,8 +323,7 @@ export function App() {
 
     window.addEventListener('keydown', closeOnEscape);
     return () => {
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', closeOnEscape);
     };
   }, [mobileDemoOpen]);
@@ -491,7 +502,6 @@ export function App() {
                       src={gameEmbedUrl}
                       title="Demonstração interativa do Detailer Business"
                       loading="lazy"
-                      scrolling="no"
                       allow="fullscreen; clipboard-write"
                       allowFullScreen
                       referrerPolicy="strict-origin-when-cross-origin"
@@ -603,7 +613,7 @@ export function App() {
               <div className="investment-points">
                 <div><span><Icon name="check" size={16} /></span><p><strong>Entrada simples</strong> com um formulário curto e o conteúdo principal do seu método.</p></div>
                 <div><span><Icon name="check" size={16} /></span><p><strong>Piloto de 14 dias</strong> para experimentar com seu público antes de investir.</p></div>
-                <div><span><Icon name="check" size={16} /></span><p><strong>Continuidade simples</strong> com opções prontas, entregas claras e valor definido depois do teste.</p></div>
+                <div><span><Icon name="check" size={16} /></span><p><strong>Continuidade transparente</strong> com opções de escopo e valor apresentadas depois do teste.</p></div>
               </div>
               <div className="investment-note">
                 <Icon name="money" size={21} />
@@ -651,8 +661,8 @@ export function App() {
                 {formState === 'sending' ? 'Enviando...' : 'Quero testar por 14 dias'}
                 {formState !== 'sending' ? <Icon name="arrow" size={18} /> : null}
               </button>
-              {formState === 'success' ? <p className="form-message form-message--success" role="status" aria-live="polite">Recebemos seus dados. Vamos confirmar o próximo passo pelo WhatsApp.</p> : null}
-              {formState === 'error' ? <p className="form-message form-message--error" role="alert">Não foi possível enviar agora. Tente novamente em instantes.</p> : null}
+              {formState === 'success' ? <p className="form-message form-message--success">Recebemos seus dados. Vamos confirmar o próximo passo pelo WhatsApp.</p> : null}
+              {formState === 'error' ? <p className="form-message form-message--error">Não foi possível enviar agora. Tente novamente em instantes.</p> : null}
               <small>Sem renovação automática. Seus dados serão usados apenas para organizar o piloto.</small>
             </form>
           </div>
@@ -675,12 +685,11 @@ export function App() {
       {mobileDemoOpen && gameEmbedUrl ? (
         <div className="mobile-demo-overlay" role="dialog" aria-modal="true" aria-label="Demonstração do Detailer Business">
           <button className="mobile-demo-overlay__close" type="button" onClick={() => setMobileDemoOpen(false)} aria-label="Fechar demonstração">
-            <span aria-hidden="true">×</span><span className="mobile-demo-overlay__close-label">Fechar</span>
+            <span aria-hidden="true">×</span> Fechar
           </button>
           <iframe
             src={gameEmbedUrl}
             title="Demonstração interativa do Detailer Business em tela cheia"
-            scrolling="no"
             allow="fullscreen; clipboard-write"
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"
