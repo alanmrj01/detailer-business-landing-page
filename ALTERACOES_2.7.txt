@@ -1,0 +1,12 @@
+DETAILER BUSINESS LANDING PAGE 2.7
+
+- Direção visual reconstruída com sistema de espaçamento, tipografia e superfícies coerente.
+- Todos os arquivos de imagem e ilustração da versão 2.6 foram preservados sem recompressão.
+- Correção dos enquadramentos: screenshots deixam de ser comprimidas por inteiro e passam a ser apresentadas em recortes legíveis.
+- Mockup do celular ganhou viewport real, acabamento de aparelho e enquadramento da decisão principal.
+- Visual de decisão e diagnóstico reorganizado em dois planos com escala legível.
+- Painel de personalização recebeu enquadramento profissional e identificação contextual.
+- Electude tornou-se o case principal, com destaque visual e selo de referência mais próxima do setor.
+- Duolingo e Kahoot! permanecem como referências complementares.
+- Tipografia e contraste ampliados em desktop, tablet e celular.
+- Formulário, iframe independente, Netlify Forms, segurança e copy comercial foram preservados.

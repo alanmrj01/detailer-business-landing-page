@@ -1,6 +1,6 @@
-# Detailer Business Landing Page 2.6
+# Detailer Business Landing Page 2.7
 
-Versão consolidada com a composição visual da 2.3 e a linguagem comercial aprovada da 2.5.
+Versão com direção visual profissional, enquadramentos corrigidos e Electude como referência principal do setor automotivo.
 
 ## Rodar localmente
 

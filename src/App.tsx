@@ -96,18 +96,20 @@ const valuePillars = [
 
 const marketReferences = [
   {
-    name: 'Duolingo',
-    label: 'Missões e progressão',
-    text: 'Transforma prática recorrente em uma jornada clara, curta e participativa.',
-    href: 'https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/',
-    image: duolingoImage,
-  },
-  {
     name: 'Electude',
     label: 'Simulação automotiva',
     text: 'O aluno pratica diagnóstico e tomada de decisão em situações técnicas antes da oficina real.',
     href: 'https://www.electude.com/learning-solutions/light-vehicles/',
     image: electudeImage,
+    featured: true,
+  },
+  {
+    name: 'Duolingo',
+    label: 'Missões e progressão',
+    text: 'Transforma prática recorrente em uma jornada clara, curta e participativa.',
+    href: 'https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/',
+    image: duolingoImage,
+    featured: false,
   },
   {
     name: 'Kahoot!',
@@ -115,6 +117,7 @@ const marketReferences = [
     text: 'Perguntas, escolhas e resposta imediata tornam o aprendizado mais ativo.',
     href: 'https://kahoot.com/what-is-kahoot/',
     image: kahootImage,
+    featured: false,
   },
 ];
 
@@ -443,7 +446,10 @@ export function App() {
 
             <div className="hero-product" data-reveal>
               <div className="hero-device">
-                <img src={mobileImage} alt="Simulador Detailer Business em um celular" width="390" height="2540" fetchPriority="high" decoding="async" />
+                <div className="hero-device__speaker" aria-hidden="true" />
+                <div className="hero-device__screen">
+                  <img src={mobileImage} alt="Simulador Detailer Business em um celular" width="390" height="2540" fetchPriority="high" decoding="async" />
+                </div>
               </div>
               <div className="hero-product-card hero-product-card--top">
                 <span><Icon name="method" size={19} /></span>
@@ -552,8 +558,12 @@ export function App() {
             </div>
 
             <div className="learning-preview" data-reveal>
-              <img src={decisionImage} alt="Tela de decisão do Detailer Business" width="1365" height="1141" loading="lazy" decoding="async" />
+              <div className="learning-preview__main">
+                <span className="visual-label"><Icon name="decisions" size={15} /> Decisão contextual</span>
+                <img src={decisionImage} alt="Tela de decisão do Detailer Business" width="1365" height="1141" loading="lazy" decoding="async" />
+              </div>
               <div className="learning-preview__result">
+                <span className="visual-label"><Icon name="diagnosis" size={15} /> Diagnóstico final</span>
                 <img src={resultImage} alt="Tela de diagnóstico final do Detailer Business" width="1365" height="1390" loading="lazy" decoding="async" />
               </div>
               <div className="learning-preview__caption"><Icon name="sparkles" size={18} /> Decisão, consequência e diagnóstico na mesma jornada.</div>
@@ -569,20 +579,40 @@ export function App() {
               text="O Detailer Business aplica esse princípio ao conhecimento do criador: participação, decisão, feedback e progressão."
               align="center"
             />
-            <div className="reference-grid">
-              {marketReferences.map((reference) => (
-                <article className="reference-card" key={reference.name} data-reveal>
-                  <img src={reference.image} alt={`Ilustração inspirada no mecanismo de aprendizagem do ${reference.name}`} width="640" height="420" loading="lazy" decoding="async" />
+            <div className="reference-showcase">
+              {marketReferences.filter((reference) => reference.featured).map((reference) => (
+                <article className="reference-card reference-card--featured" key={reference.name} data-reveal>
+                  <div className="reference-card__media">
+                    <img src={reference.image} alt={`Ilustração inspirada no mecanismo de aprendizagem do ${reference.name}`} width="640" height="420" loading="lazy" decoding="async" />
+                  </div>
                   <div className="reference-card__body">
+                    <span className="reference-badge"><Icon name="target" size={14} /> Referência mais próxima do setor</span>
                     <small>{reference.label}</small>
                     <h3>{reference.name}</h3>
                     <p>{reference.text}</p>
                     <a href={reference.href} target="_blank" rel="noopener noreferrer">
-                      Ver referência oficial <Icon name="arrow" size={15} />
+                      Conhecer a referência automotiva <Icon name="arrow" size={16} />
                     </a>
                   </div>
                 </article>
               ))}
+              <div className="reference-stack">
+                {marketReferences.filter((reference) => !reference.featured).map((reference) => (
+                  <article className="reference-card reference-card--compact" key={reference.name} data-reveal>
+                    <div className="reference-card__media">
+                      <img src={reference.image} alt={`Ilustração inspirada no mecanismo de aprendizagem do ${reference.name}`} width="640" height="420" loading="lazy" decoding="async" />
+                    </div>
+                    <div className="reference-card__body">
+                      <small>{reference.label}</small>
+                      <h3>{reference.name}</h3>
+                      <p>{reference.text}</p>
+                      <a href={reference.href} target="_blank" rel="noopener noreferrer">
+                        Ver referência oficial <Icon name="arrow" size={15} />
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
             <p className="reference-disclaimer">Essas marcas são referências públicas de aprendizagem interativa. Não são clientes, parceiros ou cases do Detailer Business.</p>
           </div>
@@ -607,7 +637,10 @@ export function App() {
             </div>
 
             <div className="customization-visual" data-reveal>
-              <div className="settings-frame"><img src={settingsImage} alt="Painel de personalização do Detailer Business" width="1365" height="994" loading="lazy" decoding="async" /></div>
+              <div className="settings-frame">
+                <span className="visual-label"><Icon name="method" size={15} /> Personalização do método</span>
+                <img src={settingsImage} alt="Painel de personalização do Detailer Business" width="1365" height="994" loading="lazy" decoding="async" />
+              </div>
               <div className="customization-card">
                 <span><Icon name="brand" size={22} /></span>
                 <div><strong>Sua marca, linguagem e critérios</strong><p>O aluno reconhece sua metodologia dentro da experiência.</p></div>
